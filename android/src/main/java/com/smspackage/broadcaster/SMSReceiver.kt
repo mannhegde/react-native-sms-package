@@ -34,7 +34,6 @@ class SMSReceiver : BroadcastReceiver() {
       (context?.applicationContext as? ReactApplicationContext)?.getJSModule(
         DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
       )?.emit("NEW_MESSAGE_RECEIVED", message)
-
     }
   }
 }
