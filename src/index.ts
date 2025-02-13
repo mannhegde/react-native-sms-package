@@ -82,8 +82,8 @@ export function fetchSMSForPeriod({
   includePersonalSMS = false,
   order = 'desc',
 }: {
-  startDateTime?: string;
-  endDateTime?: string;
+  startDateTime: string;
+  endDateTime: string;
   includePersonalSMS?: boolean;
   order?: 'desc' | 'asc';
 }) {
