@@ -14,7 +14,6 @@ class SmsModule(reactContext: ReactApplicationContext) :
     companion object {
         private lateinit var Sender: SendSMS
         private lateinit var Lister: ListSMS
-        const val SMS_SENDING_FAILED = "Sms verification failed. Please try again."
     }
 
     override fun getName(): String {
