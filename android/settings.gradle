@@ -1,0 +1,11 @@
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+  repositories {
+    google()
+    mavenCentral()
+
+  }
+}
+
+// Include your project modules
+include ':app', ':react-native-sms-package'

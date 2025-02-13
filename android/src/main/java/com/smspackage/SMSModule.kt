@@ -4,8 +4,8 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-import com.sms.workers.ListSMS
-import com.sms.workers.SendSMS
+import com.smspackage.workers.ListSMS
+import com.smspackage.workers.SendSMS
 
 
 class SmsModule(reactContext: ReactApplicationContext) :

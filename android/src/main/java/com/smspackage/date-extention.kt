@@ -1,4 +1,4 @@
-package com.smspackage.helpers
+package com.smspackage
 
 import java.time.Instant
 import java.time.ZoneId

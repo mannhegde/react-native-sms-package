@@ -1,4 +1,4 @@
-package com.smspackage.helpers
+package com.smspackage
 
 import com.google.gson.annotations.SerializedName
 
