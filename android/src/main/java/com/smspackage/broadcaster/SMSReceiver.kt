@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.telephony.SmsMessage
-import com.facebook.react.ReactApplication
+import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.smspackage.Message
 
@@ -23,14 +23,17 @@ class SMSReceiver : BroadcastReceiver() {
         for (pdu in pdus) {
           val smsMessage =
             SmsMessage.createFromPdu(pdu as ByteArray, format)
-          message = Message(smsMessage.originatingAddress.toString(), smsMessage.messageBody, smsMessage.timestampMillis.toString())
+          message = Message(
+            smsMessage.originatingAddress.toString(),
+            smsMessage.messageBody,
+            smsMessage.timestampMillis.toString()
+          )
         }
       }
 
-      (context?.applicationContext as ReactApplication)
-        .reactNativeHost.reactInstanceManager.currentReactContext
-        ?.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-        ?.emit("NEW_MESSAGE_RECEIVED",message)
+      (context?.applicationContext as? ReactApplicationContext)?.getJSModule(
+        DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
+      )?.emit("NEW_MESSAGE_RECEIVED", message)
     }
   }
 }
