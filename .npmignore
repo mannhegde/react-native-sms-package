@@ -1,0 +1,21 @@
+# Exclude configuration and development files
+.editorconfig
+.gitattributes
+.nvmrc
+.watchmanconfig
+.yarnrc.yml
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+babel.config.js
+lefthook.yml
+tsconfig.build.json
+tsconfig.json
+
+# Exclude Git-related files
+.gitignore
+.git/
+
+# Exclude node_modules and build directories
+node_modules/
+build/
+dist/
