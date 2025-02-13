@@ -11,9 +11,9 @@ import com.smspackage.toZonedDateTime
 
 class ListSMS(private var reactApplicationContext: ReactApplicationContext) {
 
-  fun fetchAllSMS(includePersonalSMS: Boolean? = false, order: String): Pair<List<Message>, Int> {
+  fun fetchAllSMS(includePersonalMessages: Boolean? = false, order: String): Pair<List<Message>, Int> {
 
-    val selection = if (includePersonalSMS != true) {
+    val selection = if (includePersonalMessages != true) {
       "address NOT LIKE '+%' AND LENGTH(address) NOT BETWEEN 9 AND 14"
     } else {
       null
@@ -41,14 +41,14 @@ class ListSMS(private var reactApplicationContext: ReactApplicationContext) {
   fun fetchSMSForPeriod(
     startDateTime: String? = null,
     endDateTime: String? = null,
-    includePersonalSMS: Boolean? = false,
+    includePersonalMessages: Boolean? = false,
     order: String? = "ASC"
   ): Pair<List<Message>, Int> {
     val selectionClauses = mutableListOf<String>()
     val selectionArgs = mutableListOf<String>()
 
     // Filter for non-personal SMS if required
-    if (includePersonalSMS != true) {
+    if (includePersonalMessages != true) {
       selectionClauses.add("address NOT LIKE '+%' AND LENGTH(address) NOT BETWEEN 9 AND 14")
     }
 

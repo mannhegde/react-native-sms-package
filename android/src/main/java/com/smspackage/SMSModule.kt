@@ -27,47 +27,47 @@ class SmsModule(reactContext: ReactApplicationContext) :
 
     @ReactMethod
     fun sendSms(
-        smsRecipient: String,
-        smsPayload: String,
+        recipient: String,
+        payload: String,
         subscriptionId: Int?,
-        shouldVerify: Boolean?,
+        shouldVerifySuccessfulSend: Boolean?,
         promise: Promise
     ) {
         Sender.sendSms(
-            smsRecipient,
-            smsPayload,
+            recipient,
+            payload,
             subscriptionId,
-            shouldVerify,
+            shouldVerifySuccessfulSend,
             promise
         )
     }
 
     @ReactMethod
     fun sendSmsToMultipleRecipients(
-        smsRecipient: List<String>,
-        smsPayload: String,
+        recipients[]: List<String>,
+        payload: String,
         subscriptionId: Int?,
-        shouldVerify: Boolean?,
+        shouldVerifySuccessfulSend: Boolean?,
         promise: Promise
     ) {
         Sender.sendSmsToMultipleRecipients(
-            smsRecipient,
-            smsPayload,
+            recipients,
+            payload,
             subscriptionId,
-            shouldVerify,
+            shouldVerifySuccessfulSend,
             promise
         )
     }
 
     @ReactMethod
-    fun sendSmsManually(smsRecipient: String, smsPayload: String, promise: Promise) {
-        Sender.sendSmsManually(smsRecipient, smsPayload, promise)
+    fun sendSmsManually(recipient: String, payload: String, promise: Promise) {
+        Sender.sendSmsManually(recipient, payload, promise)
     }
 
     @ReactMethod
-    fun fetchAllSMS(includePersonalSMS: Boolean, order: String, promise: Promise) {
+    fun fetchAllSMS(includePersonalMessages: Boolean, order: String, promise: Promise) {
         try {
-            promise.resolve(Lister.fetchAllSMS(includePersonalSMS, order))
+            promise.resolve(Lister.fetchAllSMS(includePersonalMessages, order))
         } catch (e: Exception) {
             promise.reject(e)
         }
@@ -77,7 +77,7 @@ class SmsModule(reactContext: ReactApplicationContext) :
     fun fetchSMSForPeriod(
         startDateTime: String,
         endDateTime: String,
-        includePersonalSMS: Boolean,
+        includePersonalMessages: Boolean,
         order: String,
         promise: Promise
     ) {
@@ -86,7 +86,7 @@ class SmsModule(reactContext: ReactApplicationContext) :
                 Lister.fetchSMSForPeriod(
                     startDateTime,
                     endDateTime,
-                    includePersonalSMS,
+                    includePersonalMessages,
                     order
                 )
             )

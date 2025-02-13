@@ -30,35 +30,35 @@ import { sendSms, sendSmsToMultipleRecipients, sendSmsManually, fetchAllSMS, fet
 
 
 const result = await sendSms({
-  smsRecipient: '9876543210', // string
-  smsPayload: 'hey i found new package, check it out', // string
+  recipient: '9876543210', // string
+  payload: 'hey i found new package, check it out', // string
   subscriptionId: 1, //optional number. will pick default subscription id if not provided. Works only for android.
-  shouldVerify: true, // optional boolean. Default is set to false
+  shouldVerifySuccessfulSend: true, // optional boolean. Default is set to false
 });
 
 const result = await sendSmsToMultipleRecipients({
-  smsRecipients: ['9876543210', '1234567890'], // string[]
-  smsPayload: 'hey i found new package, check it out', // string
+  recipients: ['9876543210', '1234567890'], // string[]
+  payload: 'hey i found new package, check it out', // string
   subscriptionId: 1, //optional number. will pick default subscription id if not provided. Works only for android.
-  shouldVerify: true, // optional boolean. Default is set to false
+  shouldVerifySuccessfulSend: true, // optional boolean. Default is set to false
 });
 
 // Android only methods
 
 const result = await sendSmsManually({
-  smsRecipient: '9876543210', //string
-  smsPayload: 'hey i found new package, check it out', // string
+  recipient: '9876543210', //string
+  payload: 'hey i found new package, check it out', // string
 });
 
 const result = await fetchAllSMS({
-  includePersonalSMS: false, // optional boolean. Default is set to false
+  includePersonalMessages: false, // optional boolean. Default is set to false
   order: 'desc', // optional 'desc' | 'asc'.  Default is set to desc
 });
 
 const result = await fetchSMSForPeriod({
   startDateTime: '2024-02-13T13:40:11+00:00', //Date string. iso8601 or YYYY-MM-DD
   endDateTime: '2025-02-13T13:40:11+00:00', //Date string. iso8601 or YYYY-MM-DD
-  includePersonalSMS: false, // optional boolean. Default is set to false
+  includePersonalMessages: false, // optional boolean. Default is set to false
   order: 'desc', // optional 'desc' | 'asc'.  Default is set to desc
 });
 const result = await fetchLatestSMS({
@@ -66,7 +66,7 @@ const result = await fetchLatestSMS({
 });
 
 //Note:
-//includePersonalSMS flag is for including reading sms from mobile numbers (Ex: +91-9876543210). When set to false (default) only marketing sms will be retrivied.
+//includePersonalMessages flag is for including reading sms from mobile numbers (Ex: +91-9876543210). When set to false (default) only marketing sms will be retrivied.
 
 ```
 ## Contributing

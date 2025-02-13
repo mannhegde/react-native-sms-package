@@ -22,11 +22,11 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
   }
 
   fun onSuccessfulSmsSent(
-    smsRecipient: String?,
-    smsPayload: String,
+    recipient: String?,
+    payload: String,
     promise: Promise
   ) {
-    if (smsRecipient == null) {
+    if (recipient == null) {
       promise.reject(java.lang.Exception("SMS Destination is invalid"))
     }
 
@@ -53,7 +53,7 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
         val address = cursor.getString(addressIndex)
         val body = cursor.getString(bodyIndex)
 
-        if (address == smsRecipient && body == smsPayload) {
+        if (address == recipient && body == payload) {
           promise.resolve("success")
         } else {
           promise.reject(Exception(SMS_SENDING_FAILED))
@@ -72,23 +72,23 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
     recipients: List<String>,
     message: String,
     subscriptionId: Int?,
-    shouldVerify: Boolean?,
+    shouldVerifySuccessfulSend: Boolean?,
     promise: Promise
   ) {
     for (recipient in recipients) {
-      sendSms(recipient, message, subscriptionId, shouldVerify, promise)
+      sendSms(recipient, message, subscriptionId, shouldVerifySuccessfulSend, promise)
     }
   }
 
   /*fun sendSms(
-      smsRecipient: String?,
-      smsPayload: String,
+      recipient: String?,
+      payload: String,
       subscriptionId: Int?,
-      shouldVerify:Boolean?,
+      shouldVerifySuccessfulSend:Boolean?,
       promise: Promise
   ) {
       try {
-          if (smsRecipient == null) {
+          if (recipient == null) {
               promise.reject(java.lang.Exception("SMS Destination is invalid"))
           }
 
@@ -105,8 +105,8 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
                   override fun onReceive(arg0: Context?, arg1: Intent?) {
                       when (resultCode) {
                           Activity.RESULT_OK -> {
-                              if(shouldVerify==true){
-                                  onSuccessfulSmsSent(smsRecipient, smsPayload, promise)
+                              if(shouldVerifySuccessfulSend==true){
+                                  onSuccessfulSmsSent(recipient, payload, promise)
                               }else{
                                   promise.resolve("success")
                               }
@@ -125,8 +125,8 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
                       override fun onReceive(arg0: Context?, arg1: Intent?) {
                           when (resultCode) {
                               Activity.RESULT_OK ->  {
-                                  if(shouldVerify==true){
-                                      onSuccessfulSmsSent(smsRecipient, smsPayload, promise)
+                                  if(shouldVerifySuccessfulSend==true){
+                                      onSuccessfulSmsSent(recipient, payload, promise)
                                   }else{
                                       promise.resolve("success")
                                   }
@@ -142,7 +142,7 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
                   ContextCompat.RECEIVER_NOT_EXPORTED
               )
           }
-          smsManager.sendTextMessage(smsRecipient, null, smsPayload, sentPI, null)
+          smsManager.sendTextMessage(recipient, null, payload, sentPI, null)
       } catch (e: Exception) {
           e.message?.let { Log.i("SendSMS", it) }
           promise.reject(e)
@@ -150,13 +150,13 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
   }*/
 
   fun sendSms(
-    smsRecipient: String?,
-    smsPayload: String,
+    recipient: String?,
+    payload: String,
     subscriptionId: Int?,
-    shouldVerify: Boolean?,
+    shouldVerifySuccessfulSend: Boolean?,
     promise: Promise
   ) {
-    if (smsRecipient.isNullOrEmpty()) {
+    if (recipient.isNullOrEmpty()) {
       promise.reject(Exception("SMS Destination is invalid"))
       return
     }
@@ -177,8 +177,8 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
       override fun onReceive(context: Context?, intent: Intent?) {
         when (resultCode) {
           Activity.RESULT_OK -> {
-            if (shouldVerify == true) {
-              onSuccessfulSmsSent(smsRecipient, smsPayload, promise)
+            if (shouldVerifySuccessfulSend == true) {
+              onSuccessfulSmsSent(recipient, payload, promise)
             } else {
               promise.resolve("success")
             }
@@ -201,7 +201,7 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
         IntentFilter("SMS_SENT"),
         ContextCompat.RECEIVER_NOT_EXPORTED
       )
-      smsManager.sendTextMessage(smsRecipient, null, smsPayload, sentPI, null)
+      smsManager.sendTextMessage(recipient, null, payload, sentPI, null)
     } catch (e: Exception) {
       Log.e("SendSMS", "Error sending SMS: ${e.message}", e)
       promise.reject(e)
@@ -209,11 +209,11 @@ class SendSMS(private var reactApplicationContext: ReactApplicationContext) {
     }
   }
 
-  fun sendSmsManually(smsRecipient: String, smsPayload: String, promise: Promise) {
+  fun sendSmsManually(recipient: String, payload: String, promise: Promise) {
     try {
       val sendIntent = Intent(Intent.ACTION_VIEW)
-      sendIntent.data = Uri.parse("smsto:" + smsRecipient)
-      sendIntent.putExtra("sms_body", smsPayload)
+      sendIntent.data = Uri.parse("smsto:" + recipient)
+      sendIntent.putExtra("sms_body", payload)
       sendIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
       reactApplicationContext.startActivity(sendIntent)
       promise.resolve("success")

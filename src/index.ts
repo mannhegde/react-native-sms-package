@@ -19,78 +19,78 @@ const SmsPackage = NativeModules.SmsPackage
 
 // Exporting the native methods
 export function sendSms({
-  smsRecipient,
-  smsPayload,
+  recipient,
+  payload,
   subscriptionId,
-  shouldVerify = false,
+  shouldVerifySuccessfulSend = false,
 }: {
-  smsRecipient: string;
-  smsPayload: string;
+  recipient: string;
+  payload: string;
   subscriptionId?: string;
-  shouldVerify?: boolean;
+  shouldVerifySuccessfulSend?: boolean;
 }) {
   return SmsPackage.sendSms(
-    smsRecipient,
-    smsPayload,
+    recipient,
+    payload,
     subscriptionId,
-    shouldVerify
+    shouldVerifySuccessfulSend
   );
 }
 
 export function sendSmsToMultipleRecipients({
-  smsRecipients,
-  smsPayload,
+  recipients,
+  payload,
   subscriptionId,
-  shouldVerify = false,
+  shouldVerifySuccessfulSend = false,
 }: {
-  smsRecipients: string[];
-  smsPayload: string;
+  recipients: string[];
+  payload: string;
   subscriptionId?: string;
-  shouldVerify?: boolean;
+  shouldVerifySuccessfulSend?: boolean;
 }) {
   return SmsPackage.sendSmsToMultipleRecipients(
-    smsRecipients,
-    smsPayload,
+    recipients,
+    payload,
     subscriptionId,
-    shouldVerify
+    shouldVerifySuccessfulSend
   );
 }
 
 export function sendSmsManually({
-  smsRecipient,
-  smsPayload,
+  recipient,
+  payload,
 }: {
-  smsRecipient: string;
-  smsPayload: string;
+  recipient: string;
+  payload: string;
 }) {
-  return SmsPackage.sendSmsManually(smsRecipient, smsPayload);
+  return SmsPackage.sendSmsManually(recipient, payload);
 }
 
 export function fetchAllSMS({
-  includePersonalSMS = false,
+  includePersonalMessages = false,
   order = 'desc',
 }: {
-  includePersonalSMS?: boolean;
+  includePersonalMessages?: boolean;
   order?: 'desc' | 'asc';
 }) {
-  return SmsPackage.fetchAllSMS(includePersonalSMS, order);
+  return SmsPackage.fetchAllSMS(includePersonalMessages, order);
 }
 
 export function fetchSMSForPeriod({
   startDateTime,
   endDateTime,
-  includePersonalSMS = false,
+  includePersonalMessages = false,
   order = 'desc',
 }: {
   startDateTime: string;
   endDateTime: string;
-  includePersonalSMS?: boolean;
+  includePersonalMessages?: boolean;
   order?: 'desc' | 'asc';
 }) {
   return SmsPackage.fetchSMSForPeriod(
     startDateTime,
     endDateTime,
-    includePersonalSMS,
+    includePersonalMessages,
     order
   );
 }
